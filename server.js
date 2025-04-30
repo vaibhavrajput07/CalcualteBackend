@@ -1,5 +1,15 @@
 require('dotenv').config();
 
+// Serve frontend in production
+if (process.env.NODE_ENV === 'production') {
+  const frontendPath = path.join(__dirname, '..', 'frontend', 'dist');  // Change to dist
+  app.use(express.static(frontendPath));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(frontendPath, 'index.html'));
+  });
+}
+
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -18,8 +28,8 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Route prefixes
-app.use('/api/love', loveRoutes);          // Example: /api/love/save-love
-app.use('/api/password', passwordRoutes);  // Example: /api/password/set-password
+app.use('/love', loveRoutes);          // Example: /api/love/save-love
+app.use('/password', passwordRoutes);  // Example: /api/password/set-password
 
 // MongoDB connection
 const dbURI = process.env.ATLASDB_URL;
@@ -31,15 +41,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     console.error("❌ MongoDB connection error:", err);
   });
 
-// Serve frontend in production
-if (process.env.NODE_ENV === 'production') {
-  const frontendPath = path.join(__dirname, '..', 'frontend', 'dist');  // Change to dist
-  app.use(express.static(frontendPath));
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(frontendPath, 'index.html'));
-  });
-}
 
 
 
