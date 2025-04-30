@@ -152,14 +152,20 @@ app.delete('/love/:id', async (req, res) => {
   }
 });
 
-// Serve frontend in production
+// ✅ Serve frontend in production (Vite: dist folder)
 if (process.env.NODE_ENV === 'production') {
-  const frontendPath = path.join(__dirname, '..', 'frontend', 'dist');  // Change to dist
-  app.use(express.static(frontendPath));
+  const distPath = path.join(__dirname, '../frontend/dist');
+  const indexHtmlPath = path.join(distPath, 'index.html');
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(frontendPath, 'index.html'));
-  });
+  if (fs.existsSync(indexHtmlPath)) {
+    app.use(express.static(distPath));
+
+    app.get('*', (req, res) => {
+      res.sendFile(indexHtmlPath);
+    });
+  } else {
+    console.warn("⚠️ 'dist/index.html' not found. Please run 'npm run build' in the frontend.");
+  }
 }
 
 // Start the server
