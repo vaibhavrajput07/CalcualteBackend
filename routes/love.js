@@ -125,26 +125,26 @@ router.post("/save-love", async (req, res) => {
 //   }
 // });
 
-router.delete("/:id", async (req, res) => {
-  const loveId = req.params.id;
+// router.delete("/:id", async (req, res) => {
+//   const loveId = req.params.id;
 
-  if (!loveId) {
-    return res.status(400).json({ error: "ID parameter is missing" });
-  }
+//   if (!loveId) {
+//     return res.status(400).json({ error: "ID parameter is missing" });
+//   }
 
-  try {
-    const deleted = await Love.findByIdAndDelete(loveId);
+//   try {
+//     const deleted = await Love.findByIdAndDelete(loveId);
 
-    if (!deleted) {
-      return res.status(404).json({ error: "Record not found" });
-    }
+//     if (!deleted) {
+//       return res.status(404).json({ error: "Record not found" });
+//     }
 
-    res.json({ message: "Record deleted successfully!" });
-  } catch (error) {
-    console.error("Delete error:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
+//     res.json({ message: "Record deleted successfully!" });
+//   } catch (error) {
+//     console.error("Delete error:", error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
 
 
 
