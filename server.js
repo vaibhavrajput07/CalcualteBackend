@@ -43,10 +43,6 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     console.error("❌ MongoDB connection error:", err);
   });
 
-
-
-
-
 // Start the server
 
 app.listen(port, () => {
