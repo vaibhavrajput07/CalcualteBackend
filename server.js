@@ -15,12 +15,18 @@ const port = process.env.PORT || 5000;
 
 // Middleware
 app.use(bodyParser.json());
-app.use(cors());
 
-app.use(cors({
+const cors = require("cors");
+
+// CORS setup
+const corsOptions = {
   origin: "https://calculatefrontend.onrender.com",
+  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
-}));
+};
+
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 
 // MongoDB connection
@@ -34,27 +40,27 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   });
 
 // Password-related routes
-// app.post('/password/set-password', async (req, res) => {
-//   const { password } = req.body;
+app.post('/password/set-password', async (req, res) => {
+  const { password } = req.body;
 
-//   if (!password) {
-//     return res.status(400).json({ error: "Password is required!" });
-//   }
+  if (!password) {
+    return res.status(400).json({ error: "Password is required!" });
+  }
 
   
-//   const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-//   try {
-//     const passwordRecord = new Password({
-//       password: hashedPassword,
-//     });
+  try {
+    const passwordRecord = new Password({
+      password: hashedPassword,
+    });
 
-//     await passwordRecord.save();
-//     res.status(201).json({ message: "Password set successfully!" });
-//   } catch (err) {
-//     res.status(500).json({ error: "Failed to set the password" });
-//   }
-// });
+    await passwordRecord.save();
+    res.status(201).json({ message: "Password set successfully!" });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to set the password" });
+  }
+});
 
 // Love-related routes
 app.post('/love/save-love', async (req, res) => {
