@@ -125,7 +125,7 @@ router.post("/save-love", async (req, res) => {
 //   }
 // });
 
-router.delete("/delete-love/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   const loveId = req.params.id;
 
   if (!loveId) {
