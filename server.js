@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require('path');
+const fs = require('fs');
 const bcrypt = require('bcryptjs');
 const Password = require('./models/Password');
 const Love = require('./models/Love');
