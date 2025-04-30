@@ -17,6 +17,12 @@ const port = process.env.PORT || 5000;
 app.use(bodyParser.json());
 app.use(cors());
 
+app.use(cors({
+  origin: "https://calculatefrontend.onrender.com",
+  credentials: true
+}));
+
+
 // MongoDB connection
 const dbURI = process.env.ATLASDB_URL;
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
